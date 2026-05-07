@@ -2,8 +2,8 @@
    CSS CUSTOM PROPERTIES — THEME SYSTEM
 ============================================================ */
 :root {
-  --accent: #793df2;
-  --accent-dim: #8bbf2a;
+  --accent: #312843;
+  --accent-dim: #90c331;
   --accent-glow: rgba(181,242,61,0.18);
   --accent-subtle: rgba(181,242,61,0.08);
   --red: #ff4d4d;
@@ -1034,7 +1034,7 @@ input, select, textarea { font-family: inherit; }
   position: fixed;
   inset: 0;
   z-index: 999;
-  background: #000;
+  background: #c09292;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -1074,7 +1074,7 @@ input, select, textarea { font-family: inherit; }
 .gym-btn-start {
   background: var(--accent);
   border-color: var(--accent);
-  color: #000;
+  color: #8b5151;
 }
 .gym-btn-start:hover { box-shadow: 0 0 30px var(--accent-glow); }
 .gym-btn-stop {

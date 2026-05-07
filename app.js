@@ -71,8 +71,15 @@ function loginUser(user) {
   initCharts();
   showToast('🎉', 'Welcome back, ' + user.name.split(' ')[0] + '!');
   refreshQuote();
-  // Workout reminder notification after 3s
-  setTimeout(() => showToast('💪', "Time to hit the gym! Don't skip today.", 6000), 3000);
+  // Workout reminder notification after 3s. This only fires if the user has
+  // already allowed device notifications from the bell button.
+  setTimeout(() => {
+    sendDeviceNotification({
+      title: 'FitForge Workout Reminder',
+      body: "Time to hit the gym! Don't skip today.",
+      tag: 'fitforge-workout-reminder'
+    });
+  }, 3000);
 }
 
 function logout() {
@@ -787,7 +794,69 @@ function refreshQuote() {
 /* ============================================================
    NOTIFICATIONS
 ============================================================ */
-function sendNotification() {
+const DEVICE_NOTIFICATION_OPTIONS = {
+  icon: 'fitforge-icon.svg',
+  badge: 'fitforge-icon.svg',
+  vibrate: [160, 80, 160],
+  requireInteraction: false
+};
+
+async function registerNotificationWorker() {
+  if (!('serviceWorker' in navigator) || !window.isSecureContext) return null;
+
+  try {
+    const registration = await navigator.serviceWorker.register('sw.js');
+    return registration;
+  } catch (err) {
+    console.warn('Service worker registration failed:', err);
+    return null;
+  }
+}
+
+async function ensureNotificationPermission(promptUser = false) {
+  if (!('Notification' in window)) {
+    showToast('!', 'This browser does not support phone notifications.');
+    return false;
+  }
+
+  if (Notification.permission === 'granted') return true;
+
+  if (Notification.permission === 'denied') {
+    showToast('!', 'Notifications are blocked. Enable them in your browser settings.');
+    return false;
+  }
+
+  if (!promptUser) return false;
+
+  const permission = await Notification.requestPermission();
+  if (permission === 'granted') return true;
+
+  showToast('!', 'Allow notifications to receive reminders on your phone.');
+  return false;
+}
+
+async function sendDeviceNotification({ title, body, tag }, promptUser = false) {
+  const canNotify = await ensureNotificationPermission(promptUser);
+  if (!canNotify) return false;
+
+  const options = {
+    ...DEVICE_NOTIFICATION_OPTIONS,
+    body,
+    tag,
+    data: { url: location.href }
+  };
+
+  const registration = await registerNotificationWorker();
+  if (registration && 'showNotification' in registration) {
+    await registration.showNotification(title, options);
+  } else {
+    new Notification(title, options);
+  }
+
+  return true;
+}
+
+async function sendNotification() {
   const msgs = [
     { icon:'💪', text:"Time to hit the gym! Don't skip leg day." },
     { icon:'🏃', text:"Your streak is at 7 days — keep it alive!" },
@@ -796,7 +865,11 @@ function sendNotification() {
     { icon:'⚡', text:"Ready for today's session? You've got this!" }
   ];
   const m = msgs[Math.floor(Math.random()*msgs.length)];
-  showToast(m.icon, m.text, 5000);
+  await sendDeviceNotification({
+    title: 'FitForge Reminder',
+    body: m.text,
+    tag: 'fitforge-manual-reminder'
+  }, true);
 }
 
 /* ============================================================
