@@ -100,6 +100,8 @@ window.addEventListener('DOMContentLoaded', () => {
   document.documentElement.setAttribute('data-theme', theme);
   STATE.theme = theme;
   updateThemeLabel();
+  registerNotificationWorker();
+  updateInstallButton();
 });
 
 /* ============================================================
@@ -790,6 +792,66 @@ function refreshQuote() {
   document.getElementById('quote-text').textContent = '"' + q.text + '"';
   document.getElementById('quote-author').textContent = q.author;
 }
+
+/* ============================================================
+   APP INSTALL / DOWNLOAD
+============================================================ */
+let deferredInstallPrompt = null;
+
+function isAppInstalled() {
+  return window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+}
+
+function updateInstallButton() {
+  const button = document.getElementById('install-app-btn');
+  if (!button) return;
+
+  if (isAppInstalled()) {
+    button.textContent = '✓ Installed';
+    button.disabled = true;
+    button.title = 'FitForge is installed';
+  } else {
+    button.textContent = '⬇ App';
+    button.disabled = false;
+    button.title = 'Download FitForge';
+  }
+}
+
+async function installApp() {
+  if (isAppInstalled()) {
+    showToast('OK', 'FitForge is already installed.');
+    return;
+  }
+
+  if (!deferredInstallPrompt) {
+    showToast('⬇', 'Use your browser menu and choose Install app or Add to Home Screen.');
+    return;
+  }
+
+  deferredInstallPrompt.prompt();
+  const choice = await deferredInstallPrompt.userChoice;
+  deferredInstallPrompt = null;
+
+  if (choice.outcome === 'accepted') {
+    showToast('OK', 'FitForge is downloading to your device.');
+  } else {
+    showToast('!', 'App download cancelled.');
+  }
+
+  updateInstallButton();
+}
+
+window.addEventListener('beforeinstallprompt', event => {
+  event.preventDefault();
+  deferredInstallPrompt = event;
+  updateInstallButton();
+});
+
+window.addEventListener('appinstalled', () => {
+  deferredInstallPrompt = null;
+  updateInstallButton();
+  showToast('OK', 'FitForge installed successfully.');
+});
 
 /* ============================================================
    NOTIFICATIONS
