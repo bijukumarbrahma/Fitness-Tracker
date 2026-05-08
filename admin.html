@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#38bdf8">
+  <title>Admin | Codex Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.webmanifest?v=6">
+  <link rel="stylesheet" href="css/styles.css?v=6">
+</head>
+<body>
+  <div class="app-shell" data-page="admin">
+    <aside class="sidebar">
+      <a class="brand" href="dashboard.html">
+        <span class="brand-mark"><i data-lucide="shield"></i></span>
+        <span>Admin Studio</span>
+      </a>
+      <nav class="nav-stack">
+        <a class="nav-link active" href="admin.html"><i data-lucide="chart-pie"></i><span>Overview</span></a>
+        <a class="nav-link" href="dashboard.html"><i data-lucide="layout-dashboard"></i><span>App</span></a>
+      </nav>
+      <div class="sidebar-card">
+        <strong>Content Control</strong>
+        <p class="list-meta">Monitor users, photos, growth, and activity.</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="list-meta">Secure admin panel</p>
+          <h1>Platform Analytics</h1>
+        </div>
+        <div class="top-actions">
+          <button class="icon-button" id="themeToggle" aria-label="Toggle theme"><i data-lucide="sun-moon"></i></button>
+          <button class="icon-button" id="logoutBtn" aria-label="Log out"><i data-lucide="log-out"></i></button>
+        </div>
+      </header>
+
+      <section class="grid metric-grid">
+        <article class="metric-card"><div class="metric-head"><span>Users</span><i data-lucide="users"></i></div><div class="metric-value" id="adminUsers">0</div><div class="metric-sub">registered</div></article>
+        <article class="metric-card"><div class="metric-head"><span>Workouts</span><i data-lucide="dumbbell"></i></div><div class="metric-value" id="adminWorkouts">0</div><div class="metric-sub">logged</div></article>
+        <article class="metric-card"><div class="metric-head"><span>Nutrition</span><i data-lucide="utensils"></i></div><div class="metric-value" id="adminMeals">0</div><div class="metric-sub">days logged</div></article>
+        <article class="metric-card"><div class="metric-head"><span>Photos</span><i data-lucide="image"></i></div><div class="metric-value" id="adminPhotos">0</div><div class="metric-sub">uploaded</div></article>
+      </section>
+
+      <section class="grid analytics-grid" style="margin-top: 18px;">
+        <article class="chart-card"><div class="section-head"><h2>User Growth</h2><span class="pill">live</span></div><canvas id="adminGrowthChart"></canvas></article>
+        <article class="chart-card"><div class="section-head"><h2>Top Athletes</h2><span class="pill good">ranked</span></div><div class="list" id="topUsers"></div></article>
+      </section>
+
+      <section class="section-card" style="margin-top: 18px;">
+        <div class="section-head"><div><p class="list-meta">Manage users</p><h2 style="margin: 4px 0 0;">Accounts</h2></div><span class="pill" id="userCountPill">0 users</span></div>
+        <div style="overflow: auto; margin-top: 14px;">
+          <table class="admin-table">
+            <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Joined</th><th></th></tr></thead>
+            <tbody id="adminUserRows"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="section-card" style="margin-top: 18px;">
+        <div class="section-head"><div><p class="list-meta">Moderation</p><h2 style="margin: 4px 0 0;">Flagged Content</h2></div><span class="pill warn" id="flaggedCount">0 flagged</span></div>
+        <div class="list" id="flaggedPhotos" style="margin-top: 14px;"></div>
+      </section>
+    </main>
+  </div>
+  <div class="toast-stack" id="toastStack"></div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="js/app.js?v=6"></script>
+</body>
+</html>
+

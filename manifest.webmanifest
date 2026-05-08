@@ -1,17 +1,16 @@
 {
-  "name": "FitForge Fitness Tracker",
-  "short_name": "FitForge",
-  "start_url": "./index.html",
-  "scope": "./",
+  "name": "FitnesX",
+  "short_name": "FitnesX",
+  "description": "Premium gym workout, nutrition, body, and analytics tracker.",
+  "start_url": "/dashboard.html",
   "display": "standalone",
-  "background_color": "#10151f",
-  "theme_color": "#19d27f",
+  "background_color": "#f5fbff",
+  "theme_color": "#38bdf8",
   "icons": [
     {
-      "src": "fitforge-icon.svg",
-      "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "/assets/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     }
   ]
 }

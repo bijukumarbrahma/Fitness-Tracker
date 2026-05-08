@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#38bdf8">
+  <title>Dashboard | Codex Fitness</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.webmanifest?v=6">
+  <link rel="stylesheet" href="css/styles.css?v=6">
+</head>
+<body>
+  <div class="app-shell" data-page="dashboard">
+    <aside class="sidebar">
+      <a class="brand" href="dashboard.html">
+        <span class="brand-mark"><i data-lucide="dumbbell"></i></span>
+        <span>Codex Fitness</span>
+      </a>
+      <nav class="nav-stack" data-nav>
+        <button class="nav-link active" data-section-target="overview"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></button>
+        <button class="nav-link" data-section-target="workouts"><i data-lucide="dumbbell"></i><span>Workouts</span></button>
+        <button class="nav-link" data-section-target="nutrition"><i data-lucide="utensils"></i><span>Nutrition</span></button>
+        <button class="nav-link" data-section-target="steps"><i data-lucide="footprints"></i><span>Steps</span></button>
+        <button class="nav-link" data-section-target="body"><i data-lucide="scan-face"></i><span>Body</span></button>
+        <button class="nav-link" data-section-target="analytics"><i data-lucide="chart-no-axes-combined"></i><span>Analytics</span></button>
+        <button class="nav-link" data-section-target="goals"><i data-lucide="target"></i><span>Goals</span></button>
+      </nav>
+      <div class="sidebar-card">
+        <strong id="smartGreeting">Ready to train?</strong>
+        <p class="list-meta" id="smartRecommendation">Syncing your gym plan.</p>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="list-meta" id="todayLabel">Today</p>
+          <h1 id="pageTitle">Dashboard</h1>
+        </div>
+        <div class="top-actions">
+          <a class="button" href="admin.html" id="adminLink" hidden><i data-lucide="shield"></i><span>Admin</span></a>
+          <button class="icon-button" id="themeToggle" aria-label="Toggle theme"><i data-lucide="sun-moon"></i></button>
+          <button class="icon-button" id="logoutBtn" aria-label="Log out"><i data-lucide="log-out"></i></button>
+        </div>
+      </header>
+
+      <section class="section active" id="overview">
+        <div class="dashboard-stack">
+          <div class="hero-grid">
+            <div class="hero-panel">
+              <div class="hero-content">
+                <p class="eyebrow"><i data-lucide="flame"></i><span id="rewardText">Daily challenge active</span></p>
+                <h2 id="heroGreeting">Own today's session.</h2>
+                <p id="quoteText">Discipline compounds. Tiny wins become visible later.</p>
+                <div class="hero-actions">
+                  <button class="button primary" data-open-modal="workoutModal"><i data-lucide="play"></i><span>Start Workout</span></button>
+                  <button class="button ghost" data-section-target="nutrition"><i data-lucide="plus"></i><span>Log Meal</span></button>
+                </div>
+              </div>
+            </div>
+            <div class="section-card">
+              <div class="section-head">
+                <div>
+                  <p class="list-meta">Gym performance</p>
+                  <h2 style="margin: 4px 0 0;">Score</h2>
+                </div>
+                <div class="ring" id="scoreRing" data-label="0" style="--p: 0;"></div>
+              </div>
+              <div class="grid" style="margin-top: 22px;">
+                <div>
+                  <div class="metric-head"><span>Goal completion</span><span id="goalPercent">0%</span></div>
+                  <div class="progress"><span id="goalBar" style="--value:0%;"></span></div>
+                </div>
+                <div>
+                  <div class="metric-head"><span>Water</span><span id="waterText">0 ml</span></div>
+                  <div class="progress"><span id="waterBar" style="--value:0%;"></span></div>
+                </div>
+                <div class="button-row">
+                  <button class="button" id="addWaterBtn"><i data-lucide="droplets"></i><span>+250 ml</span></button>
+                  <button class="button" data-section-target="analytics"><i data-lucide="chart-line"></i><span>Charts</span></button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid metric-grid">
+            <article class="metric-card">
+              <div class="metric-head"><span>Daily calories</span><i data-lucide="flame"></i></div>
+              <div class="metric-value" id="caloriesValue">0</div>
+              <div class="metric-sub" id="caloriesSub">of target</div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-head"><span>Workout streak</span><i data-lucide="zap"></i></div>
+              <div class="metric-value" id="streakValue">0</div>
+              <div class="metric-sub">days locked in</div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-head"><span>BMI</span><i data-lucide="scale"></i></div>
+              <div class="metric-value" id="bmiValue">0</div>
+              <div class="metric-sub" id="weightSub">weight trend</div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-head"><span>Burned</span><i data-lucide="activity"></i></div>
+              <div class="metric-value" id="burnedValue">0</div>
+              <div class="metric-sub">kcal this week</div>
+            </article>
+            <article class="metric-card">
+              <div class="metric-head"><span>Footsteps</span><i data-lucide="footprints"></i></div>
+              <div class="metric-value" id="stepsValue">0</div>
+              <div class="metric-sub" id="stepsSub">of 10,000 goal</div>
+            </article>
+          </div>
+
+          <div class="grid work-grid">
+            <section class="section-card">
+              <div class="section-head">
+                <div>
+                  <p class="list-meta">Weekly workout summary</p>
+                  <h2 style="margin: 4px 0 0;">Gym Activity</h2>
+                </div>
+                <span class="pill good" id="weeklyWorkouts">0 sessions</span>
+              </div>
+              <div class="heatmap" id="heatmap" style="margin-top: 18px;"></div>
+            </section>
+            <section class="section-card">
+              <div class="section-head">
+                <div>
+                  <p class="list-meta">Active workout timer</p>
+                  <h2 id="timerText" style="margin: 4px 0 0;">00:00</h2>
+                </div>
+                <button class="button" id="timerBtn"><i data-lucide="timer"></i><span>Start</span></button>
+              </div>
+              <div class="list" style="margin-top: 18px;">
+                <div class="list-row"><span>Chest</span><span class="pill good">Ready</span></div>
+                <div class="list-row"><span>Back</span><span class="pill">24h</span></div>
+                <div class="list-row"><span>Legs</span><span class="pill warn">Recover</span></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="workouts">
+        <div class="grid work-grid">
+          <section class="section-card">
+            <div class="section-head">
+              <div><p class="list-meta">Workout tracker</p><h2 style="margin: 4px 0 0;">Routines</h2></div>
+              <button class="button primary" data-open-modal="workoutModal"><i data-lucide="plus"></i><span>New</span></button>
+            </div>
+            <div class="list" id="workoutList" style="margin-top: 18px;"></div>
+          </section>
+          <section class="section-card">
+            <div class="section-head">
+              <div><p class="list-meta">Rest timer</p><h2 id="restTimerText" style="margin: 4px 0 0;">01:30</h2></div>
+              <button class="button" id="restTimerBtn"><i data-lucide="hourglass"></i><span>Start</span></button>
+            </div>
+            <div class="list" id="exerciseHistory" style="margin-top: 18px;"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="section" id="steps">
+        <div class="grid work-grid">
+          <section class="section-card">
+            <div class="section-head">
+              <div><p class="list-meta">Footstep counting</p><h2 style="margin: 4px 0 0;">Daily Steps</h2></div>
+              <button class="button primary" data-open-modal="stepsModal"><i data-lucide="plus"></i><span>Add Steps</span></button>
+            </div>
+            <div class="section-head" style="margin-top: 22px;">
+              <div>
+                <p class="list-meta">Today</p>
+                <h2 id="stepsLargeValue" style="margin: 4px 0 0; font-size: clamp(2.4rem, 7vw, 5rem);">0</h2>
+              </div>
+              <div class="ring" id="stepsRing" data-label="0%" style="--p: 0;"></div>
+            </div>
+            <div class="grid" style="margin-top: 18px;">
+              <div>
+                <div class="metric-head"><span>Step goal</span><span id="stepsGoalText">0 / 10,000</span></div>
+                <div class="progress"><span id="stepsBar" style="--value:0%;"></span></div>
+              </div>
+              <div class="button-row">
+                <button class="button" id="startStepCounterBtn"><i data-lucide="play"></i><span>Start Sensor</span></button>
+                <button class="button" id="saveSensorStepsBtn"><i data-lucide="save"></i><span>Save Session</span></button>
+              </div>
+              <p class="list-meta" id="sensorStepStatus">Manual entry always works. Phone motion counting depends on browser sensor permission.</p>
+            </div>
+          </section>
+          <section class="section-card">
+            <div class="section-head">
+              <div><p class="list-meta">Movement stats</p><h2 style="margin: 4px 0 0;">Walk Output</h2></div>
+              <span class="pill good" id="stepCaloriesText">0 kcal</span>
+            </div>
+            <div class="list" style="margin-top: 18px;">
+              <div class="list-row"><div><p class="list-title">Distance</p><p class="list-meta">Estimated from stride length</p></div><span class="pill" id="stepDistanceText">0 km</span></div>
+              <div class="list-row"><div><p class="list-title">Active minutes</p><p class="list-meta">Walking pace estimate</p></div><span class="pill" id="stepMinutesText">0 min</span></div>
+              <div class="list-row"><div><p class="list-title">Live session</p><p class="list-meta">Sensor-detected steps before saving</p></div><span class="pill warn" id="sensorSessionSteps">0</span></div>
+            </div>
+            <div class="list" id="stepHistory" style="margin-top: 18px;"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="section" id="nutrition">
+        <div class="grid work-grid">
+          <section class="section-card">
+            <div class="section-head">
+              <div><p class="list-meta">Macro tracker</p><h2 style="margin: 4px 0 0;">Today</h2></div>
+              <button class="button primary" data-open-modal="mealModal"><i data-lucide="plus"></i><span>Meal</span></button>
+            </div>
+            <div class="grid" style="margin-top: 18px;">
+              <div><div class="metric-head"><span>Protein</span><span id="proteinText">0g</span></div><div class="progress"><span id="proteinBar"></span></div></div>
+              <div><div class="metric-head"><span>Carbs</span><span id="carbsText">0g</span></div><div class="progress"><span id="carbsBar"></span></div></div>
+              <div><div class="metric-head"><span>Fats</span><span id="fatsText">0g</span></div><div class="progress"><span id="fatsBar"></span></div></div>
+            </div>
+          </section>
+          <section class="section-card">
+            <div class="section-head">
+              <div><p class="list-meta">Meal log</p><h2 style="margin: 4px 0 0;">Fuel</h2></div>
+              <span class="pill" id="mealCount">0 meals</span>
+            </div>
+            <div class="list" id="mealList" style="margin-top: 18px;"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="section" id="body">
+        <div class="grid work-grid">
+          <section class="section-card">
+            <div class="section-head">
+              <div><p class="list-meta">Body tracker</p><h2 style="margin: 4px 0 0;">Measurements</h2></div>
+              <button class="button primary" data-open-modal="bodyModal"><i data-lucide="plus"></i><span>Log</span></button>
+            </div>
+            <div class="list" id="bodyList" style="margin-top: 18px;"></div>
+          </section>
+          <section class="section-card">
+            <div class="section-head">
+              <div><p class="list-meta">Transformation photos</p><h2 style="margin: 4px 0 0;">Progress</h2></div>
+              <button class="button" data-open-modal="photoModal"><i data-lucide="camera"></i><span>Upload</span></button>
+            </div>
+            <div class="photo-grid" id="photoGrid" style="margin-top: 18px;"></div>
+          </section>
+        </div>
+      </section>
+
+      <section class="section" id="analytics">
+        <div class="grid analytics-grid">
+          <article class="chart-card"><div class="section-head"><h2>Weight</h2><span class="pill">kg</span></div><canvas id="weightChart"></canvas></article>
+          <article class="chart-card"><div class="section-head"><h2>Calories</h2><span class="pill">kcal</span></div><canvas id="caloriesChart"></canvas></article>
+          <article class="chart-card"><div class="section-head"><h2>Consistency</h2><span class="pill">14 days</span></div><canvas id="consistencyChart"></canvas></article>
+          <article class="chart-card"><div class="section-head"><h2>Strength</h2><span class="pill">PRs</span></div><canvas id="strengthChart"></canvas></article>
+          <article class="chart-card"><div class="section-head"><h2>Steps</h2><span class="pill">14 days</span></div><canvas id="stepsChart"></canvas></article>
+        </div>
+      </section>
+
+      <section class="section" id="goals">
+        <div class="grid work-grid">
+          <section class="section-card">
+            <div class="section-head">
+              <div><p class="list-meta">Fitness goals</p><h2 style="margin: 4px 0 0;">Targets</h2></div>
+              <button class="button primary" data-open-modal="goalModal"><i data-lucide="plus"></i><span>Goal</span></button>
+            </div>
+            <div class="list" id="goalList" style="margin-top: 18px;"></div>
+          </section>
+          <section class="section-card">
+            <div class="section-head"><div><p class="list-meta">Daily challenge</p><h2 style="margin: 4px 0 0;">Streak Rewards</h2></div><span class="pill good">Active</span></div>
+            <div class="list" style="margin-top: 18px;">
+              <div class="list-row"><div><p class="list-title">Complete 3 working sets</p><p class="list-meta">Unlock Set Builder badge</p></div><span class="pill">+12 pts</span></div>
+              <div class="list-row"><div><p class="list-title">Hit protein target</p><p class="list-meta">Macro discipline reward</p></div><span class="pill good">+20 pts</span></div>
+              <div class="list-row"><div><p class="list-title">Sleep 7 hours</p><p class="list-meta">Recovery score booster</p></div><span class="pill warn">Tonight</span></div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <nav class="mobile-nav" data-nav>
+      <button class="nav-link active" data-section-target="overview"><i data-lucide="layout-dashboard"></i><span>Dashboard</span></button>
+      <button class="nav-link" data-section-target="workouts"><i data-lucide="dumbbell"></i><span>Workouts</span></button>
+      <button class="nav-link" data-section-target="nutrition"><i data-lucide="utensils"></i><span>Nutrition</span></button>
+      <button class="nav-link" data-section-target="steps"><i data-lucide="footprints"></i><span>Steps</span></button>
+      <button class="nav-link" data-section-target="body"><i data-lucide="scan-face"></i><span>Body</span></button>
+    </nav>
+  </div>
+
+  <button class="fab" data-open-modal="workoutModal" aria-label="Add workout"><i data-lucide="plus"></i></button>
+
+  <div class="modal" id="workoutModal">
+    <form class="modal-panel" id="workoutForm">
+      <div class="section-head"><h2>New Workout</h2><button class="icon-button" type="button" data-close-modal><i data-lucide="x"></i></button></div>
+      <div class="form-grid">
+        <div class="field"><label>Title</label><input name="title" value="Push Strength" required></div>
+        <div class="field"><label>Category</label><select name="category"><option>Chest</option><option>Back</option><option>Legs</option><option>Arms</option><option>Shoulders</option><option>Cardio</option></select></div>
+        <div class="field"><label>Exercise</label><input name="exercise" value="Bench Press" required></div>
+        <div class="field"><label>Calories</label><input name="caloriesBurned" type="number" value="320"></div>
+        <div class="field"><label>Set 1 kg</label><input name="w1" type="number" value="60"></div>
+        <div class="field"><label>Set 1 reps</label><input name="r1" type="number" value="10"></div>
+        <div class="field"><label>Set 2 kg</label><input name="w2" type="number" value="70"></div>
+        <div class="field"><label>Set 2 reps</label><input name="r2" type="number" value="8"></div>
+        <div class="field"><label>Set 3 kg</label><input name="w3" type="number" value="75"></div>
+        <div class="field"><label>Set 3 reps</label><input name="r3" type="number" value="6"></div>
+      </div>
+      <button class="button primary" type="submit" style="margin-top: 16px;"><i data-lucide="check"></i><span>Save Workout</span></button>
+    </form>
+  </div>
+
+  <div class="modal" id="mealModal">
+    <form class="modal-panel" id="mealForm">
+      <div class="section-head"><h2>Add Meal</h2><button class="icon-button" type="button" data-close-modal><i data-lucide="x"></i></button></div>
+      <div class="form-grid">
+        <div class="field full"><label>Meal</label><input name="name" value="Chicken rice bowl" required></div>
+        <div class="field"><label>Calories</label><input name="calories" type="number" value="620"></div>
+        <div class="field"><label>Protein</label><input name="protein" type="number" value="48"></div>
+        <div class="field"><label>Carbs</label><input name="carbs" type="number" value="70"></div>
+        <div class="field"><label>Fats</label><input name="fats" type="number" value="14"></div>
+      </div>
+      <button class="button primary" type="submit" style="margin-top: 16px;"><i data-lucide="check"></i><span>Save Meal</span></button>
+    </form>
+  </div>
+
+  <div class="modal" id="bodyModal">
+    <form class="modal-panel" id="bodyForm">
+      <div class="section-head"><h2>Body Log</h2><button class="icon-button" type="button" data-close-modal><i data-lucide="x"></i></button></div>
+      <div class="form-grid">
+        <div class="field"><label>Weight kg</label><input name="weightKg" type="number" step="0.1" value="75" required></div>
+        <div class="field"><label>Height cm</label><input name="heightCm" type="number" step="0.1" value="175" required></div>
+        <div class="field"><label>Body fat %</label><input name="bodyFatPercent" type="number" step="0.1" value="18"></div>
+        <div class="field"><label>Waist cm</label><input name="waist" type="number" step="0.1" value="82"></div>
+      </div>
+      <button class="button primary" type="submit" style="margin-top: 16px;"><i data-lucide="check"></i><span>Save Body Log</span></button>
+    </form>
+  </div>
+
+  <div class="modal" id="stepsModal">
+    <form class="modal-panel" id="stepsForm">
+      <div class="section-head"><h2>Add Footsteps</h2><button class="icon-button" type="button" data-close-modal><i data-lucide="x"></i></button></div>
+      <div class="form-grid">
+        <div class="field"><label>Steps to add</label><input name="increment" type="number" min="1" value="2500" required></div>
+        <div class="field"><label>Daily goal</label><input name="goal" type="number" min="1000" value="10000"></div>
+      </div>
+      <button class="button primary" type="submit" style="margin-top: 16px;"><i data-lucide="footprints"></i><span>Save Steps</span></button>
+    </form>
+  </div>
+
+  <div class="modal" id="goalModal">
+    <form class="modal-panel" id="goalForm">
+      <div class="section-head"><h2>New Goal</h2><button class="icon-button" type="button" data-close-modal><i data-lucide="x"></i></button></div>
+      <div class="form-grid">
+        <div class="field full"><label>Title</label><input name="title" value="Bench press 100kg" required></div>
+        <div class="field"><label>Category</label><select name="category"><option>Strength</option><option>Weight</option><option>Nutrition</option><option>Consistency</option><option>Recovery</option></select></div>
+        <div class="field"><label>Current</label><input name="current" type="number" value="75"></div>
+        <div class="field"><label>Target</label><input name="target" type="number" value="100"></div>
+        <div class="field"><label>Unit</label><input name="unit" value="kg"></div>
+      </div>
+      <button class="button primary" type="submit" style="margin-top: 16px;"><i data-lucide="check"></i><span>Save Goal</span></button>
+    </form>
+  </div>
+
+  <div class="modal" id="photoModal">
+    <form class="modal-panel" id="photoForm">
+      <div class="section-head"><h2>Upload Photo</h2><button class="icon-button" type="button" data-close-modal><i data-lucide="x"></i></button></div>
+      <div class="form-grid">
+        <div class="field full"><label>Photo</label><input name="photo" type="file" accept="image/png,image/jpeg,image/webp" required></div>
+        <div class="field"><label>Caption</label><input name="caption" value="Check-in"></div>
+        <div class="field"><label>Weight kg</label><input name="weightKg" type="number" step="0.1" value="75"></div>
+      </div>
+      <button class="button primary" type="submit" style="margin-top: 16px;"><i data-lucide="upload"></i><span>Upload</span></button>
+    </form>
+  </div>
+
+  <div class="toast-stack" id="toastStack"></div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="js/app.js?v=6"></script>
+</body>
+</html>
