@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset App Cache | Codex Fitness</title>
+  <link rel="stylesheet" href="css/styles.css?v=6">
+</head>
+<body>
+  <main class="auth-page" data-page="reset">
+    <section class="auth-side" style="grid-column: 1 / -1;">
+      <div class="auth-card">
+        <div class="brand">
+          <span class="brand-mark">CF</span>
+          <span>Codex Fitness</span>
+        </div>
+        <h2>Resetting app cache</h2>
+        <p id="status">Clearing old browser data and refreshing the app.</p>
+        <a class="button primary" id="continueLink" href="register.html" style="display:none;">Continue to Register</a>
+      </div>
+    </section>
+  </main>
+  <script>
+    (async function resetApp() {
+      const status = document.getElementById('status');
+      try {
+        localStorage.removeItem('fit_token');
+        localStorage.removeItem('fit_user');
+        localStorage.removeItem('fit_dashboard_cache');
+
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.map((registration) => registration.unregister()));
+        }
+
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map((key) => caches.delete(key)));
+        }
+
+        status.textContent = 'Cache cleared. Opening the fresh register page now.';
+        document.getElementById('continueLink').style.display = 'inline-flex';
+        setTimeout(() => {
+          location.href = 'register.html?v=6&t=' + Date.now();
+        }, 900);
+      } catch (error) {
+        status.textContent = 'Reset finished with a warning: ' + error.message;
+        document.getElementById('continueLink').style.display = 'inline-flex';
+      }
+    })();
+  </script>
+</body>
+</html>
